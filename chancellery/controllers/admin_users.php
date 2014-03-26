@@ -34,8 +34,9 @@ class Admin_users extends Admin_Controller {
     public function edit ($id = NULL)
     {
         $this->data->codes = $this->chancellery_m->get_code_by_user($id);
-	$this->data->active_id = $id;
-	$this->template->title($this->module_details['name'])->build('admin/users_form', $this->data);
+        $this->data->display_name = $this->db->where('user_id', $id)->get('profiles')->row()->display_name;
+		$this->data->active_id = $id;
+		$this->template->title($this->module_details['name'])->build('admin/users_form', $this->data);
     }
     
     public function delete ($id = NULL)
@@ -52,13 +53,13 @@ class Admin_users extends Admin_Controller {
 	    $check = $this->chancellery_m->check_code($_POST['user']);
 	    if ($check == 0)
 	    {
-		$this->chancellery_m->add_code($_POST);
-		$this->session->set_flashdata('success', lang('message_added_succesfully'));
+			$this->chancellery_m->add_code($_POST);
+			$this->session->set_flashdata('success', lang('message_added_succesfully'));
 	    }
 	    else
 	    {
-		$this->chancellery_m->update_code($_POST);
-		$this->session->set_flashdata('success', lang('message_updated_succesfully'));
+			$this->chancellery_m->update_code($_POST);
+			$this->session->set_flashdata('success', lang('message_updated_succesfully'));
 	    }
 	    redirect ('/admin/chancellery/users');
 	}

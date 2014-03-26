@@ -20,7 +20,7 @@
         } 
 </script>
 <h2 id="page_title" class="page-title"><?= lang('page:chancellery:index:title');?></h2>
-<p><?= lang('page:chancellery:index:message');?></p>
+<p><?= lang('page:chancellery:index:message');?>. Ваш лимит на заказ канцелярии: <b><?= $limit; ?></b></p>
 	<? if(validation_errors()) { ?>
 	<div class="error-box">
 		<?= validation_errors();?>

@@ -85,15 +85,14 @@ class Admin_report extends Admin_Controller {
         foreach ($ordered_items as $item)
         {
             $kanz = $this->chancellery_m->get_kanz_by_id($item->kanz_id);
-	    $code = $this->chancellery_m->get_code_by_user($item->user);
-            
-            $this->excel->getActiveSheet()->SetCellValue("A$i", user_displayname($item->user, FALSE));
-            $this->excel->getActiveSheet()->SetCellValue('B'.$i, $kanz->kod1);
-            $this->excel->getActiveSheet()->SetCellValue('C'.$i, $item->kolvo);
-            $this->excel->getActiveSheet()->SetCellValue('D'.$i, $kanz->ed);
-            $this->excel->getActiveSheet()->SetCellValue('E'.$i, $code[0]->code);
-            $this->excel->getActiveSheet()->SetCellValue('F'.$i, $kanz->kod2);
-            $this->excel->getActiveSheet()->SetCellValue('G'.$i, $kanz->name);
+	    	$code = $this->chancellery_m->get_code_by_user($item->user);
+	        $this->excel->getActiveSheet()->SetCellValue("A$i", user_displayname($item->user, FALSE));
+	        $this->excel->getActiveSheet()->SetCellValue('B'.$i, $kanz->kod1);
+	        $this->excel->getActiveSheet()->SetCellValue('C'.$i, $item->kolvo);
+	        $this->excel->getActiveSheet()->SetCellValue('D'.$i, $kanz->ed);
+	        $this->excel->getActiveSheet()->SetCellValue('E'.$i, $code[0]->code);
+	        $this->excel->getActiveSheet()->SetCellValue('F'.$i, $kanz->kod2);
+	        $this->excel->getActiveSheet()->SetCellValue('G'.$i, $kanz->name);
             $i++;
         }
         

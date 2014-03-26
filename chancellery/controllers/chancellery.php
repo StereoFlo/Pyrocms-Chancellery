@@ -34,10 +34,11 @@ class Chancellery extends Public_Controller
         }
         else
         {
+        	$this->data->limit = $limit[0]->limit;
             $settings = $this->chancellery_m->get_settings();
             $this->data->items = $this->chancellery_m->get_items($settings[0]->default_contractor);
             $this->data->ordered_items = $this->chancellery_m->get_ordered_items($this->current_user->id, date('m'));
-            if ($this->data->ordered_items) $this->session->set_flashdata('notice', "You edit the exiting order");
+            if ($this->data->ordered_items) $this->session->set_flashdata('notice', "Вы редактируете ранее сделанный заказ");
             $this->template->title($this->module_details['name'])->build('index', $this->data);
         }
     }
@@ -85,7 +86,7 @@ class Chancellery extends Public_Controller
             $this->email->to($this->current_user->email);
             $this->email->from('sz.support.list@megafon-retail.ru');
             $this->email->subject(lang('email:subject'));
-            $this->email->message('You have been ordered chancellery items.');
+            $this->email->message('Вы успешно сделали заказ. Если у вас есть вопросы, вы можете обратиться к менеджеру.');
             $this->email->send();
             $this->session->set_flashdata('success', lang('message_saved_succesfully'));
             redirect(base_url('chancellery'));

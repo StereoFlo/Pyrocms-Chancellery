@@ -1,5 +1,5 @@
 <section class="title">
-	<h4><?= lang('page:admin_users:users_form:title');?></h4>
+	<h4><?= lang('page:admin_users:users_form:title');?>: <?= $display_name ?></h4>
 </section>
 
 <section class="item">

@@ -6,19 +6,16 @@ class Admin_limit extends Admin_Controller {
     
     public function __construct()
     {
-	parent::__construct();
-	$this->load->library('form_validation');
-	$this->load->model('chancellery_m');
-	$this->lang->load('chancellery');
-	$this->load->model('users/user_m');
+		parent::__construct();
+		$this->load->library('form_validation');
+		$this->load->model('chancellery_m');
+		$this->lang->load('chancellery');
+		$this->load->model('users/user_m');
     }
     public function index ()
     {
 	if (isset($_GET['q']))
 	{
-	    //$this->data->users = $this->db->select('id, username')->
-	    //			    like('username', $_GET['q'])->
-	    //			    get('users')->result();
 	    $this->data->users = $this->db->select('users.id, users.username, profiles.display_name')->
 				    from('profiles')->
 				    join('users', 'profiles.user_id = users.id')->
@@ -31,15 +28,16 @@ class Admin_limit extends Admin_Controller {
 	    $this->data->users = $this->db->select('id, username')->get('users')->result();
 	}
 	
-	$this->data->limit = $this->chancellery_m->get_limits();
-	$this->template->title($this->module_details['name'])->build('admin/limit', $this->data);
+		$this->data->limit = $this->chancellery_m->get_limits();
+		$this->template->title($this->module_details['name'])->build('admin/limit', $this->data);
     }
     
     public function edit ($id = NULL)
     {
         $this->data->limit = $this->chancellery_m->get_limit_by_user($id);
-	$this->data->active_id = $id;
-	$this->template->title($this->module_details['name'])->build('admin/limit_form', $this->data);
+        $this->data->display_name = $this->db->where('user_id', $id)->get('profiles')->row()->display_name;
+		$this->data->active_id = $id;
+		$this->template->title($this->module_details['name'])->build('admin/limit_form', $this->data);
     }
     
     public function delete ($id = NULL)

@@ -50,13 +50,13 @@ class Module_Chancellery extends Module {
 					'name' => 'admin_menu_codes',
 					'uri' => 'admin/chancellery/users'
 				),
-				'report' => array(
-					'name' => 'admin_menu_report',
-					'uri' => 'admin/chancellery/report'
-				),
 				'limit' => array(
 					'name' => 'admin_menu_limit',
 					'uri' => 'admin/chancellery/limit/'
+				),
+				'report' => array(
+					'name' => 'admin_menu_report',
+					'uri' => 'admin/chancellery/report'
 				),
 			),
 		);
