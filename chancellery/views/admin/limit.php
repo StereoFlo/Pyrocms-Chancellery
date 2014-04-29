@@ -28,9 +28,13 @@
 				</tfoot>
 				<tbody>
 					<?php foreach ($users as $user): ?>
-						<tr>
-							<td class="collapse"><?= $user->username; ?></td>
-                                                        <td class="collapse"><?= user_displayname($user->id, $linked = FALSE); ?></td>
+						<tr id="<?= $user->id?>">
+							<td class="collapse">
+								<?= $user->username; ?>
+							</td>
+                            <td class="collapse">
+                            	<?= user_displayname($user->id, $linked = FALSE); ?>
+                            </td>
 							<td class="collapse">
 								<? foreach ($limit as $limits) { ?>
 								<? if ($limits->user == $user->id) { ?>

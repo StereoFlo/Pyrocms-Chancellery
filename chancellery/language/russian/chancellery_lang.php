@@ -79,7 +79,8 @@ $lang['page:admin_limit:limit:table:limit'] = 'Лимит';
 $lang['message_updated_succesfully'] = 'Успешно обновлено';
 $lang['message_saved_succesfully'] = 'Успешно сохранено';
 $lang['message_added_succesfully'] = 'Успешно добавлено';
-$lang['message_deleted_succesfully'] = 'Успешно удалено';
+$lang['message_deleted_succesfully'] = 'Успешно удалено'; //Was an error
+$lang['message_error'] = 'Произошла ошибка';
 
 //email
 $lang['email:subject'] = 'Служба заказа канцелярии';
@@ -98,9 +99,9 @@ $lang['buttons:cancel'] = 'Отменить';
  *
  *****************************/
 
-$lang['page:chancellery:messages:no_code'] = 'У вас не установлен код SAP. Пожалуйста, свяжитесь со службой поддержки по тел. 991-03-13';
-$lang['page:chancellery:messages:max_limit'] = 'Вы заказали более, чем на $max_sum рублей ($allprice). Пожалуйста, свяжитесь со службой поддержки по тел. 991-03-13';
-$lang['page:chancellery:messages:no_limit'] = 'У вас не установлен лимит на заказ канцелярии. Пожалуйста, свяжитесь со службой поддержки по тел. 991-03-13';
+$lang['page:chancellery:messages:no_code'] = 'У вас не установлен код SAP. Пожалуйста, свяжитесь с Майей Васильевой, тел. +79219982848';
+$lang['page:chancellery:messages:max_limit'] = 'Вы заказали более, чем на $max_sum рублей ($allprice). Пожалуйста, свяжитесь с Майей Васильевой, тел. +79219982848';
+$lang['page:chancellery:messages:no_limit'] = 'У вас не установлен лимит на заказ канцелярии. Пожалуйста, свяжитесь с Майей Васильевой, тел. +79219982848';
 
 $lang['page:chancellery:index:title'] = 'Создать заказ';
 $lang['page:chancellery:index:message'] = 'Вы можете сделать заказ канцелярии на этой странице';
@@ -109,5 +110,9 @@ $lang['page:chancellery:index:table:count'] = 'Количество';
 $lang['page:chancellery:index:table:ed'] = 'Еденица';
 $lang['page:chancellery:index:table:quote'] = 'Квота';
 $lang['page:chancellery:index:table:price'] = 'Цена';
+
+$lang['page:chancellery:ordered:title'] = 'Ваш заказ';
+$lang['page:chancellery:ordered:no_order'] = 'Не заказано';
+$lang['page:chancellery:ordered:no_order_in_month'] = 'Вы не сделали заказ в этом месяце, вы можете сделать это <a href="/chancellery/form">сейчас</a>'; //
 
 ?>

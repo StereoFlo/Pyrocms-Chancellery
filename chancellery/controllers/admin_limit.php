@@ -11,6 +11,7 @@ class Admin_limit extends Admin_Controller {
 		$this->load->model('chancellery_m');
 		$this->lang->load('chancellery');
 		$this->load->model('users/user_m');
+		$this->data = new stdClass();
     }
     public function index ()
     {
@@ -62,7 +63,7 @@ class Admin_limit extends Admin_Controller {
 		$this->chancellery_m->update_limit($_POST);
 		$this->session->set_flashdata('success', lang('message_updated_succesfully'));
 	    }
-	    redirect ('/admin/chancellery/limit');
+	    redirect ('/admin/chancellery/limit#'.$_POST['user']);
 	}
     }
 }

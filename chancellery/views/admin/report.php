@@ -5,8 +5,8 @@
 <section class="item">
 <table>
     <tr>
-        <td>
-        <?php echo form_open('admin/chancellery/report/excel');?>
+        <td style="vertical-align: top;">
+        <?php echo form_open('admin/chancellery/report/excel/user');?>
         <table style="width: 100%; border: 1px solid #eee;">
                 <tr>
 			<td><?= lang('page:admin_report:report:messages:select_for_user');?></td>
@@ -26,25 +26,28 @@
         
         <table style="width: 100%; border: 1px solid #eee;">
                 <tr>
-			<?= form_open('admin/chancellery/report/excel');?>
+			<?= form_open('admin/chancellery/report/excel/period');?>
                         <td colspan="2">
-				<p>
-					<?= form_dropdown('start_day', $start_day); ?>
-					<?= form_dropdown('start_year', $end_day); ?>
-				</p>
-				<p>
-					<?= form_dropdown('end_day', $start_year); ?>
-					<?= form_dropdown('end_year', $end_year); ?>
-				</p>
-				<button class="btn blue" value="save" name="btnAction" type="submit"><span><?= lang('page:admin_report:report:messages:report_period');?></span></button>
+							<p>
+								<?= form_dropdown('start_day', $start_day, 01); ?>
+								<?= form_dropdown('end_day', $end_day, 31); ?>
+							</p>
+							<p>
+								<?= form_dropdown('start_month', $start_month, date('m', strtotime('-1 month'))); ?>
+								<?= form_dropdown('end_month', $end_month, date('m')); ?>
+							</p>
+							<p>
+								<?= form_dropdown('start_year', $start_year, date('Y')); ?>
+								<?= form_dropdown('end_year', $end_year, date('Y')); ?>
+							</p>
+							<button class="btn blue" value="save" name="btnAction" type="submit"><span><?= lang('page:admin_report:report:messages:report_period');?></span></button>
                         </td>
 			<?= form_close(); ?>
                 </tr>
                 <tr>
-			<?= form_open('admin/chancellery/report/excel');?>
+			<?= form_open('admin/chancellery/report/excel/all');?>
                         <td colspan="2">
-                                <input type='hidden' name="user" value="999999" />
-                                <button class="btn blue" value="save" name="btnAction" type="submit"><span><?= lang('page:admin_report:report:messages:close_period');?></span></button>
+                           <button class="btn blue" value="save" name="btnAction" type="submit"><span><?= lang('page:admin_report:report:messages:close_period');?></span></button>
                         </td>
 			<?= form_close(); ?>
                 </tr>

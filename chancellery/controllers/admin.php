@@ -6,11 +6,12 @@ class Admin extends Admin_Controller {
     
     public function __construct()
     {
-	parent::__construct();
-	$this->load->library('excel');
-	$this->load->library('form_validation');
-	$this->load->model('chancellery_m');
-	$this->lang->load('chancellery');
+		parent::__construct();
+		$this->load->library('excel');
+		$this->load->library('form_validation');
+		$this->load->model('chancellery_m');
+		$this->lang->load('chancellery');
+		$this->data = new stdClass();
     }
 
     /*

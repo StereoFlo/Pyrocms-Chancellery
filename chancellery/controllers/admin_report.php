@@ -1,5 +1,7 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
+ini_set("memory_limit", "256M");
+
 class Admin_report extends Admin_Controller {
 
     public $section = 'report';
@@ -13,39 +15,71 @@ class Admin_report extends Admin_Controller {
 	$this->lang->load('chancellery');
         $this->load->model('users/user_m');
 	$this->lang->load('chancellery');
+	$this->data = new stdClass();
     }
     
     public function index ()
     {
-	$this->data->start_day = array('' => 'Select start day'); foreach(range(01, 31) as $d) { if ($d < 10) $d = '0'.$d; $this->data->start_day[$d] = $d; }
-	$this->data->end_day = array('' => 'Select end day'); foreach(range(01, 31) as $d) { if ($d < 10) $d = '0'.$d; $this->data->end_day[$d] = $d; }
-	$this->data->start_year = array('' => 'Select start year'); foreach(range(2000, 2050) as $d) { $this->data->start_year[$d] = $d; }
-	$this->data->end_year = array('' => 'Select end year'); foreach(range(2000, 2050) as $d) { $this->data->end_year[$d] = $d; } 
+		$this->data->start_day = array('' => 'Select start day'); foreach(range(01, 31) as $d) { if ($d < 10) $d = '0'.$d; $this->data->start_day[$d] = $d; }
+		$this->data->end_day = array('' => 'Select end day'); foreach(range(01, 31) as $d) { if ($d < 10) $d = '0'.$d; $this->data->end_day[$d] = $d; }
+		
+		$this->data->start_month = array('' => 'Select start month'); foreach(range(01, 12) as $d) { if ($d < 10) $d = '0'.$d; $this->data->start_month[$d] = $d; }
+		$this->data->end_month = array('' => 'Select end month'); foreach(range(01, 12) as $d) { if ($d < 10) $d = '0'.$d; $this->data->end_month[$d] = $d; }
+		
+		$this->data->start_year = array('' => 'Select start year'); foreach(range(2000, 2050) as $d) { $this->data->start_year[$d] = $d; }
+		$this->data->end_year = array('' => 'Select end year'); foreach(range(2000, 2050) as $d) { $this->data->end_year[$d] = $d; } 
+		
         $this->data->users = $this->user_m->dropdown('id', 'username');
         $this->template->title($this->module_details['name'])->build('admin/report', $this->data);
     }
     
-    public function excel ()
+    public function excel ($action = null)
     {
         $user = $this->input->post('user');
-	$start_day = $this->input->post('start_day');
-	$end_day = $this->input->post('end_day');
-	$start_year = $this->input->post('start_year');
-	$end_year = $this->input->post('end_year');
+		$start_day = $this->input->post('start_day');
+		$end_day = $this->input->post('end_day');
+		
+		$start_month = $this->input->post('start_month');
+		$end_month = $this->input->post('end_month');
+		
+		$start_year = $this->input->post('start_year');
+		$end_year = $this->input->post('end_year');
 	
-        if (isset($user) and $user != 999999)
+        if ($action == 'user' and $user != 999999)
         {
-            $ordered_items = $this->chancellery_m->get_ordered_items($user); //$user, date('m')
+            $userGOI = $this->chancellery_m->get_ordered_items($user); //$user, date('m')
+            $ordered_items = $userGOI->result();
+            $count = $userGOI->num_rows();
+            $this->test($count, $ordered_items);
+            
         }
-	elseif (!isset($user) and $start_day and $end_day and $start_year and $end_year)
-	{
-	    $ordered_items = $this->chancellery_m->get_ordered_items_period($start_day, $start_year, $end_day, $end_year); 
-	}
-        else
+		elseif ($action == 'period')
+		{
+		    $ordered_items_result = $this->chancellery_m->get_ordered_items_period($start_day, $start_month, $start_year, $end_day, $end_month, $end_year); 
+		    $ordered_items = $ordered_items_result->result();
+		    $count = $ordered_items_result->num_rows();
+		    $this->test($count, $ordered_items);
+		}
+        elseif ($action == 'all')
         {
-            $ordered_items = $this->chancellery_m->get_ordered_items();
+            $allGOI = $this->chancellery_m->get_ordered_items('', date('m'));
+            $ordered_items = $allGOI->result();
+            $count = $allGOI->num_rows();
+            $this->test($count, $ordered_items);
+            $this->chancellery_m->set_to_no_active();
         }
-        $count = $this->chancellery_m->get_ordered_items_count();
+        
+        
+        $filename='request' . date('YmdHis') . '.xls';
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="'.$filename.'"');
+        header('Cache-Control: max-age=0');
+        $objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
+        $objWriter->save('php://output');
+    }
+    
+    private function test ($count, $ordered_items)
+    {
         
         $this->excel->setActiveSheetIndex(0);
         $this->excel->getActiveSheet()->setTitle('Заявка '. date('YmdHis'));
@@ -93,16 +127,9 @@ class Admin_report extends Admin_Controller {
 	        $this->excel->getActiveSheet()->SetCellValue('E'.$i, $code[0]->code);
 	        $this->excel->getActiveSheet()->SetCellValue('F'.$i, $kanz->kod2);
 	        $this->excel->getActiveSheet()->SetCellValue('G'.$i, $kanz->name);
+	        $this->excel->getActiveSheet()->SetCellValue('H'.$i, $item->date);
             $i++;
         }
-        
-        
-        $filename='request' . date('YmdHis') . '.xls';
-        header('Content-Type: application/vnd.ms-excel');
-        header('Content-Disposition: attachment;filename="'.$filename.'"');
-        header('Cache-Control: max-age=0');
-        $objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
-        $objWriter->save('php://output');
-        if ($user == 999999) { $this->chancellery_m->set_to_no_active(); }
-    }
+	}
+    
 }

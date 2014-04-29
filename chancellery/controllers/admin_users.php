@@ -11,6 +11,7 @@ class Admin_users extends Admin_Controller {
 	$this->load->model('chancellery_m');
 	$this->lang->load('chancellery');
 	$this->load->model('users/user_m');
+	$this->data = new stdClass();
     }
     public function index ()
     {

@@ -1,6 +1,6 @@
 <style type="text/css">
 .focus {
-   border: 2px solid Red;
+	background-color : #ff0000; 
 }
 </style>
 <script>
@@ -40,8 +40,8 @@ function check(input, limit) {
 	</div>
 	<? } ?>
         <?= form_open('chancellery/order');?>
-	<p><?= form_submit(array('value'=> lang('buttons:save'), 'id'=>'btnSubmit')); ?></p>
         <div id="section" style="width: 100%;">
+        	<div class="btnSave"><?= form_submit(array('value'=> lang('buttons:save'), 'id'=>'btnSubmit')); ?></div>
             <div style="float: left; width: 40%; font-weight: bold"><?= lang('page:chancellery:index:table:name');?></div>
             <div style="float: left; width: 15%; font-weight: bold"><?= lang('page:chancellery:index:table:count');?></div>
             <div style="float: left; width: 15%; font-weight: bold"><?= lang('page:chancellery:index:table:ed');?></div>
@@ -54,28 +54,28 @@ function check(input, limit) {
 		<? foreach ($ordered_items as $ordered_item) { ?>
 		<? if ($item->id == $ordered_item->kanz_id) { ?>
 		<p>
-		<div style="float: left; width: 40%"><?= $item->name; ?></div>
-		<div style="float: left; width: 15%"><?= form_input(array('onkeyup'=>"check('input_".$item->id."', ".$item->quote.");", 'id' => "input_".$item->id, 'name' => $item->id, 'size'=>'5', 'value' => $ordered_item->kolvo)); ?></div>
-		<div style="float: left; width: 15%"><?= $item->ed; ?></div>
-		<div style="float: left; width: 15%" id="quote_<?= $item->id; ?>"><?= $item->quote; ?></div>
-		<div style="float: left; width: 15%" id="price_<?= $item->id; ?>"><?= $item->price; ?></div>
+			<div style="float: left; width: 40%"><?= $item->name; ?></div>
+			<div style="float: left; width: 15%"><?= form_input(array('onkeyup'=>"check('input_".$item->id."', ".$item->quote.");", 'id' => "input_".$item->id, 'name' => $item->id, 'size'=>'5', 'value' => $ordered_item->kolvo)); ?></div>
+			<div style="float: left; width: 15%"><?= $item->ed; ?></div>
+			<div style="float: left; width: 15%" id="quote_<?= $item->id; ?>"><?= $item->quote; ?></div>
+			<div style="float: left; width: 15%" id="price_<?= $item->id; ?>"><?= $item->price; ?></div>
 		</p>
 		<? } ?>
 		<? } ?>
 		<? } else { ?>
 		<p>
-		<div style="float: left; width: 40%"><?= $item->name; ?></div>
-		<div style="float: left; width: 15%"><?= form_input(array('onkeyup'=>"check('input_".$item->id."', ".$item->quote.");", 'id' => "input_".$item->id, 'name' => $item->id, 'size'=>'5', 'value' => '0')); ?></div>
-		<div style="float: left; width: 15%"><?= $item->ed; ?></div>
-		<div style="float: left; width: 15%" id="quote_<?= $item->id; ?>"><?= $item->quote; ?></div>
-		<div style="float: left; width: 15%" id="price_<?= $item->id; ?>"><?= $item->price; ?></div>
+			<div style="float: left; width: 40%"><?= $item->name; ?></div>
+			<div style="float: left; width: 15%"><?= form_input(array('onkeyup'=>"check('input_".$item->id."', ".$item->quote.");", 'id' => "input_".$item->id, 'name' => $item->id, 'size'=>'5', 'value' => '0')); ?></div>
+			<div style="float: left; width: 15%"><?= $item->ed; ?></div>
+			<div style="float: left; width: 15%" id="quote_<?= $item->id; ?>"><?= $item->quote; ?></div>
+			<div style="float: left; width: 15%" id="price_<?= $item->id; ?>"><?= $item->price; ?></div>
 		</p>
 		<? } ?>
 	    
 	    <? } ?>
-	    <p><?= form_submit(array('value'=> lang('buttons:save'), 'id'=>'btnSubmit2')); ?></p>
-        </div>
-<?= form_close(); ?>
+		<div class="btnSave"><?= form_submit(array('value'=> lang('buttons:save'), 'id'=>'btnSubmit2')); ?></div>
+		</div>
+        <?= form_close(); ?>
         
 <script>
     $(document).ready(function(){

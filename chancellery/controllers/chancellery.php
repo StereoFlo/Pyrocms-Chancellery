@@ -8,14 +8,30 @@ class Chancellery extends Public_Controller
         $this->load->model('chancellery_m');
         $this->lang->load('chancellery');
         $this->load->library('form_validation');
-        //$this->template->title($this->module_details['name'])->append_metadata('<link href="/addons/shared_addons/modules/chancellery/css/style.css" type="text/css" rel="stylesheet" />');
+        
+        $this->data = new stdClass();
+        
         if (empty($this->current_user))
         {
+        	$this->session->set_userdata('redirect_to', base_url('chancellery'));
             redirect('users/login');
         }
     }
-    
+
     public function index ()
+    {
+        $settings = $this->chancellery_m->get_settings();
+        if (empty($settings))
+        {
+        	$this->session->set_flashdata('error', "The module not configured");
+			redirect('/');
+		}
+        $this->data->items = $this->chancellery_m->get_items($settings[0]->default_contractor);
+		$this->data->ordered_items = $this->chancellery_m->get_ordered_items($this->current_user->id, date('m'))->result();
+		$this->template->title($this->module_details['name'])->build('frontend/ordered', $this->data);
+	}
+
+    public function form ()
     {
         $code = $this->chancellery_m->get_code_by_user($this->current_user->id);
         $limit = $this->chancellery_m->get_limit_by_user($this->current_user->id);
@@ -24,12 +40,12 @@ class Chancellery extends Public_Controller
             if (!isset($limit[0]->limit))
             {
                 $this->data->err_message = lang("page:chancellery:messages:no_limit");
-                $this->template->title($this->module_details['name'])->build('error', $this->data);
+                $this->template->title($this->module_details['name'])->build('frontend/error', $this->data);
             }
             elseif (!isset($code[0]->code))
             {
                 $this->data->err_message = lang("page:chancellery:messages:no_code");
-                $this->template->title($this->module_details['name'])->build('error', $this->data);
+                $this->template->title($this->module_details['name'])->build('frontend/error', $this->data);
             }
         }
         else
@@ -37,9 +53,9 @@ class Chancellery extends Public_Controller
         	$this->data->limit = $limit[0]->limit;
             $settings = $this->chancellery_m->get_settings();
             $this->data->items = $this->chancellery_m->get_items($settings[0]->default_contractor);
-            $this->data->ordered_items = $this->chancellery_m->get_ordered_items($this->current_user->id, date('m'));
+            $this->data->ordered_items = $this->chancellery_m->get_ordered_items($this->current_user->id, date('m'))->result();
             if ($this->data->ordered_items) $this->session->set_flashdata('notice', "Вы редактируете ранее сделанный заказ");
-            $this->template->title($this->module_details['name'])->build('index', $this->data);
+            $this->template->title($this->module_details['name'])->build('frontend/index', $this->data);
         }
     }
     public function order ()
@@ -57,7 +73,7 @@ class Chancellery extends Public_Controller
         
         if ($allprice > $max_sum)
         {
-            $this->session->set_flashdata('error', "You limit is $max_sum, but you order is $allprice. Please call to the support service 812-991-03-13");
+            $this->session->set_flashdata('error', "You limit is $max_sum, but you order is $allprice. Please call to the support service");
             redirect(base_url('chancellery'));
         }
         else
@@ -82,19 +98,49 @@ class Chancellery extends Public_Controller
                     $this->chancellery_m->update_ordered_item($kanz_id, $this->current_user->id, date('m'), $data);
                 }
             }
-            
-            $this->email->to($this->current_user->email);
-            $this->email->from('sz.support.list@megafon-retail.ru');
-            $this->email->subject(lang('email:subject'));
-            $this->email->message('Вы успешно сделали заказ. Если у вас есть вопросы, вы можете обратиться к менеджеру.');
-            $this->email->send();
+           
             $this->session->set_flashdata('success', lang('message_saved_succesfully'));
+            $this->sendmail();
             redirect(base_url('chancellery'));
         }
 
     }
-    function test ()
+    
+    private function sendmail ()
     {
-        var_dump($this->current_user); 
-    }
+        $settings = $this->chancellery_m->get_settings();
+        $items = $this->chancellery_m->get_items($settings[0]->default_contractor);
+		$ordered_items = $this->chancellery_m->get_ordered_items($this->current_user->id, date('m'))->result();
+		$message = "<table>";
+		foreach ($items as $item) {
+					foreach ($ordered_items as $ordered_item) {
+						if ($item->id == $ordered_item->kanz_id) {
+							if ($ordered_item->kolvo != 0) {
+									$message .= "<tr>";
+									$message .= "<td>" . $item->name . "</td>";
+									$message .= "<td>" . $ordered_item->kolvo . "</td>";
+									$message .= "<td>" . $item->ed . "</td>";
+									$message .= "<td>" . $item->quote . "</td>";
+									$message .= "<td>" . $item->price . "</td>";
+									$message .= "</tr>";
+							} else {
+									$message .= "<tr>";
+									$message .= "<td>" . $item->name . "</td>";
+									$message .= "<td><b>Не заказано</b></td>";
+									$message .= "<td>" . $item->ed . "</td>";
+									$message .= "<td>" . $item->quote . "</td>";
+									$message .= "<td>" . $item->price . "</td>";
+									$message .= "</tr>";			
+							}
+						}
+					}
+		}
+		$message .= "</table>";
+        $this->email->set_mailtype("html");
+        $this->email->to($this->current_user->email);
+        $this->email->from('sz.support.list@megafon-retail.ru');
+        $this->email->subject(lang('email:subject'));
+        $this->email->message('<p>Вы успешно сделали заказ. Если у вас есть вопросы, вы можете обратиться к менеджеру.</p>' . $message);
+        $this->email->send();
+	}
 }

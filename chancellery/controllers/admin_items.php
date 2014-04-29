@@ -10,6 +10,7 @@ class Admin_items extends Admin_Controller {
 	$this->load->library('form_validation');
 	$this->load->model('chancellery_m');
 	$this->lang->load('chancellery');
+	$this->data = new stdClass();
     }
     public function index ($action = NULL, $id = NULL)
     {

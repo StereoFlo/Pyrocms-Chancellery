@@ -129,7 +129,7 @@ class Module_Chancellery extends Module {
 			COLLATE utf8_general_ci
 			COMMENT = 'Дополнительные коды';
 		";
-		$chancellery_user_linit = "
+		$chancellery_user_limit = "
 			CREATE TABLE ".$this->db->dbprefix('chancellery_limit')." (
 			id int(11) NOT NULL AUTO_INCREMENT,
 			user varchar(255) DEFAULT NULL,
@@ -141,7 +141,12 @@ class Module_Chancellery extends Module {
 			COLLATE utf8_general_ci;
 		";
 		
-		if($this->db->query($chancellery_settings) and $this->db->query($chancellery_orders) and $this->db->query($chancellery_contractors) and $this->db->query($chancellery_list) and $this->db->query($chancellery_user_code))
+		if($this->db->query($chancellery_settings) 
+			and $this->db->query($chancellery_orders) 
+			and $this->db->query($chancellery_contractors) 
+			and $this->db->query($chancellery_list) 
+			and $this->db->query($chancellery_user_code)
+			and $this->db->query($chancellery_user_limit))
 		{
 			return TRUE;
 		}
