@@ -11,7 +11,9 @@ class Chancellery_m extends MY_Model
     public function update_settings($input)
     {
 		$data = array(
-			'default_contractor' => $input['default_contractor']
+			'default_contractor' => $input['default_contractor'],
+			'sap_codes' => $input['sap_codes'],
+			'email' => $input['email'],
         );
 
 		$this->db->where('id', $input['id']);

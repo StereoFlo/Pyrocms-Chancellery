@@ -11,7 +11,6 @@ class Admin extends Admin_Controller {
 		$this->load->library('form_validation');
 		$this->load->model('chancellery_m');
 		$this->lang->load('chancellery');
-		$this->data = new stdClass();
     }
 
     /*
@@ -20,21 +19,25 @@ class Admin extends Admin_Controller {
     
     public function index()
     {
-	$this->data->contractors = $this->chancellery_m->get_contrators();
-        $this->data->chancellery = $this->chancellery_m->get_settings();
-        $this->template->title($this->module_details['name'])->build('admin/index', $this->data);
-	if(isset($_GET['action']) && $_GET['action']=='save')
+		$contractors = $this->chancellery_m->get_contrators();
+        $chancellery = $this->chancellery_m->get_settings();
+        $this->template->title($this->module_details['name'])
+        	->set('contractors', $contractors)
+        	->set('chancellery', $chancellery)
+        	->build('admin/index');
+        
+		if(isset($_GET['action']) && $_GET['action']=='save')
         {
-		if(isset($_POST['id']) && $_POST['id'] != "")
-                {
-		    $this->chancellery_m->update_settings($_POST);
+			if(isset($_POST['id']) && $_POST['id'] != "")
+	        {
+			    $this->chancellery_m->update_settings($_POST);
+			}
+			else
+	        {
+			    $this->chancellery_m->add_settings($_POST);
+			}	
+			$this->session->set_flashdata('success', lang('message_updated_succesfully'));	
+			redirect('admin/chancellery');
 		}
-		else
-                {
-		    $this->chancellery_m->add_settings($_POST);
-		}	
-		$this->session->set_flashdata('success', lang('message_updated_succesfully'));	
-		redirect('admin/chancellery');
-	}
     }
 }

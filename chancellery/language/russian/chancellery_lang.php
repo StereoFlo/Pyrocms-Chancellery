@@ -76,6 +76,7 @@ $lang['page:admin_limit:limit:table:limit'] = 'Лимит';
 
 
 // messages
+$lang['empty_id'] = 'ID пустой';
 $lang['message_updated_succesfully'] = 'Успешно обновлено';
 $lang['message_saved_succesfully'] = 'Успешно сохранено';
 $lang['message_added_succesfully'] = 'Успешно добавлено';
@@ -84,6 +85,7 @@ $lang['message_error'] = 'Произошла ошибка';
 
 //email
 $lang['email:subject'] = 'Служба заказа канцелярии';
+$lang['email:text'] = 'Вы успешно сделали заказ. Если у вас есть вопросы, вы можете обратиться к менеджеру.';
 
 
 // buttons
@@ -114,5 +116,6 @@ $lang['page:chancellery:index:table:price'] = 'Цена';
 $lang['page:chancellery:ordered:title'] = 'Ваш заказ';
 $lang['page:chancellery:ordered:no_order'] = 'Не заказано';
 $lang['page:chancellery:ordered:no_order_in_month'] = 'Вы не сделали заказ в этом месяце, вы можете сделать это <a href="/chancellery/form">сейчас</a>'; //
+
 
 ?>

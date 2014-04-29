@@ -8,10 +8,18 @@
 <section class="item">
 <?= form_open('admin/chancellery/index?action=save', 'class="crud"');?>
 <table style="width: 450px; border: 1px solid #eee;">
-    	<tr>
-            <td><?= lang('page:admin:label:default_contractor'); ?></td>
+    <tr>
+       <td><?= lang('page:admin:label:default_contractor'); ?></td>
 		<? $data = array('' => 'Select one'); foreach ($contractors as $row) { $data[$row->id] = $row->name; } ?>
 		<td><?= form_dropdown('default_contractor', $data, (isset($chancellery[0]->default_contractor) ? $chancellery[0]->default_contractor : '')); ?></td>
+	</tr>
+    <tr>
+       <td>Do you want to use a sap codes?</td>
+	   <td><?= form_dropdown('sap_codes', array('0' => 'No', '1' => 'Yes'), (isset($chancellery[0]->sap_codes) ? $chancellery[0]->sap_codes : '0')); ?></td>
+	</tr>
+    <tr>
+       <td>Email for the send letters</td>
+	   <td><?= form_input('email', (isset($chancellery[0]->email) ? $chancellery[0]->email : '')); ?></td>
 	</tr>
 	<tr>
 		<td colspan="2">

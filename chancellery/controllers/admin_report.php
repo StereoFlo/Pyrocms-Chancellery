@@ -15,7 +15,6 @@ class Admin_report extends Admin_Controller {
 	$this->lang->load('chancellery');
         $this->load->model('users/user_m');
 	$this->lang->load('chancellery');
-	$this->data = new stdClass();
     }
     
     public function index ()
@@ -106,7 +105,6 @@ class Admin_report extends Admin_Controller {
         $this->excel->getActiveSheet()->SetCellValue('E1', 'Пользовательский заказ');
         $this->excel->getActiveSheet()->SetCellValue('F1', 'ФС');
         $this->excel->getActiveSheet()->SetCellValue('G1', 'Наименование');
-        
         $this->excel->getActiveSheet()->SetCellValue('A2', 'WEMPF');
         $this->excel->getActiveSheet()->SetCellValue('B2', 'MATNR');
         $this->excel->getActiveSheet()->SetCellValue('C2', 'ERFMG');
@@ -124,7 +122,7 @@ class Admin_report extends Admin_Controller {
 	        $this->excel->getActiveSheet()->SetCellValue('B'.$i, $kanz->kod1);
 	        $this->excel->getActiveSheet()->SetCellValue('C'.$i, $item->kolvo);
 	        $this->excel->getActiveSheet()->SetCellValue('D'.$i, $kanz->ed);
-	        $this->excel->getActiveSheet()->SetCellValue('E'.$i, $code[0]->code);
+	        $this->excel->getActiveSheet()->SetCellValue('E'.$i, isset($code[0]->code) ? $code[0]->code : '');
 	        $this->excel->getActiveSheet()->SetCellValue('F'.$i, $kanz->kod2);
 	        $this->excel->getActiveSheet()->SetCellValue('G'.$i, $kanz->name);
 	        $this->excel->getActiveSheet()->SetCellValue('H'.$i, $item->date);
