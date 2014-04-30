@@ -73,8 +73,11 @@ class Module_Chancellery extends Module {
 		
 		$chancellery_settings = "
 			CREATE TABLE ".$this->db->dbprefix('chancellery_settings')." (
-			`id` INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-			`default_contractor` INT(10) NULL
+				  id int(11) NOT NULL AUTO_INCREMENT,
+				  default_contractor int(10) DEFAULT NULL,
+				  sap_codes int(11) DEFAULT NULL,
+				  email varchar(255) DEFAULT NULL,
+				  PRIMARY KEY (id)
 			) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_general_ci COMMENT = 'Таблица настроек модуля';
 		";
 		$chancellery_orders = "

@@ -101,9 +101,9 @@ $lang['buttons:cancel'] = 'Отменить';
  *
  *****************************/
 
-$lang['page:chancellery:messages:no_code'] = 'У вас не установлен код SAP. Пожалуйста, свяжитесь с Майей Васильевой, тел. +79219982848';
-$lang['page:chancellery:messages:max_limit'] = 'Вы заказали более, чем на $max_sum рублей ($allprice). Пожалуйста, свяжитесь с Майей Васильевой, тел. +79219982848';
-$lang['page:chancellery:messages:no_limit'] = 'У вас не установлен лимит на заказ канцелярии. Пожалуйста, свяжитесь с Майей Васильевой, тел. +79219982848';
+$lang['page:chancellery:messages:no_code'] = 'У вас не установлен код SAP. Пожалуйста, обратитесь к менеджеру';
+$lang['page:chancellery:messages:max_limit'] = 'Вы заказали более, чем на $max_sum рублей ($allprice). обратитесь к менеджеру';
+$lang['page:chancellery:messages:no_limit'] = 'У вас не установлен лимит на заказ канцелярии. обратитесь к менеджеру';
 
 $lang['page:chancellery:index:title'] = 'Создать заказ';
 $lang['page:chancellery:index:message'] = 'Вы можете сделать заказ канцелярии на этой странице';
