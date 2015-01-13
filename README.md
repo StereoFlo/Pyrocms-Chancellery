@@ -1,4 +1,4 @@
 Pyrocms-Chancellery
 ===================
 
-you can to order the chancellery items from this module
+This module help you order a chancellery items from this module
