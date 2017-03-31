@@ -1,4 +1,4 @@
-<?
+<?php
 
 $lang['admin_menu_setting'] = 'Настройки';
 $lang['admin_menu_contractors'] = 'Подрядчики';
@@ -93,7 +93,7 @@ $lang['buttons:dropdown'] = 'Выберите';
 $lang['buttons:save'] = 'Сохранить';
 $lang['buttons:cancel'] = 'Отменить';
 
- /*****************************
+/*****************************
  *
  *
  *         Frontend
@@ -115,7 +115,4 @@ $lang['page:chancellery:index:table:price'] = 'Цена';
 
 $lang['page:chancellery:ordered:title'] = 'Ваш заказ';
 $lang['page:chancellery:ordered:no_order'] = 'Не заказано';
-$lang['page:chancellery:ordered:no_order_in_month'] = 'Вы не сделали заказ в этом месяце, вы можете сделать это <a href="/chancellery/form">сейчас</a>'; //
-
-
-?>
+$lang['page:chancellery:ordered:no_order_in_month'] = 'Вы не сделали заказ в этом месяце, вы можете сделать это <a href="/chancellery/form">сейчас</a>';
