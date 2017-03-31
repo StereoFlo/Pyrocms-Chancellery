@@ -86,23 +86,23 @@ class Admin_report extends Admin_Controller
 
         if ($action == 'user' and $user != 999999) {
             $userGOI = $this->chancellery_m->get_ordered_items($user); //$user, date('m')
-            $ordered_items = $userGOI->result();
+            $orderedItems = $userGOI->result();
             $count = $userGOI->num_rows();
-            $this->test($count, $ordered_items);
+            $this->make($count, $orderedItems);
 
         }
         if ($action == 'period') {
             $ordered_items_result = $this->chancellery_m->get_ordered_items_period($start_day, $start_month,
                 $start_year, $end_day, $end_month, $end_year);
-            $ordered_items = $ordered_items_result->result();
+            $orderedItems = $ordered_items_result->result();
             $count = $ordered_items_result->num_rows();
-            $this->test($count, $ordered_items);
+            $this->make($count, $orderedItems);
         }
         if ($action == 'all') {
             $allGOI = $this->chancellery_m->get_ordered_items('', date('m'));
-            $ordered_items = $allGOI->result();
+            $orderedItems = $allGOI->result();
             $count = $allGOI->num_rows();
-            $this->test($count, $ordered_items);
+            $this->make($count, $orderedItems);
             $this->chancellery_m->set_to_no_active();
         }
 
@@ -115,7 +115,7 @@ class Admin_report extends Admin_Controller
         $objWriter->save('php://output');
     }
 
-    private function test($count, $ordered_items)
+    private function make($count, $orderedItems)
     {
 
         $this->excel->setActiveSheetIndex(0);
@@ -151,7 +151,7 @@ class Admin_report extends Admin_Controller
         $this->excel->getActiveSheet()->SetCellValue('G2', '');
 
         $i = 3;
-        foreach ($ordered_items as $item) {
+        foreach ($orderedItems as $item) {
             $kanz = $this->chancellery_m->get_kanz_by_id($item->kanz_id);
             $code = $this->chancellery_m->get_code_by_user($item->user);
             $this->excel->getActiveSheet()->SetCellValue("A$i", user_displayname($item->user, false));
